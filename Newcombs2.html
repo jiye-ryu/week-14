@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>css cube</title>
+<style type="text/css">
+	body{margin: 0;}
+	section {width: 100%; height: 100vh;}
+	#boxA{width: 200px; height: 200px; background: none;
+			position: absolute; transform: translate(-50%,-50%);left: 30%; top: 30vh;
+			perspective: 400px;}
+
+
+	#boxB{width: 200px; height: 200px; background: none;
+			position: absolute; transform: translate(-50%,-50%);left: 70%; top: 30vh;
+			perspective: 400px;}
+	.cube{transform-style: preserve-3d; width: 200px; height: 200px;
+			transform: translateZ(-100px);}
+	.manwon5 { background-image: url(5front.png); background-size: 200px 100px; background-position: center center; background-repeat: no-repeat;}
+	.ani{animation: rtcube 3s infinite linear;}
+	@keyframes rtcube{
+		to{transform: translateZ(-100px) rotate3d(0.4, -0.7, 0.6, 360deg);}
+	}
+
+	.white{ width: 200px; height: 200px; position: absolute; color: black;text-align: center; line-height: 200px; opacity: 0.5;backface-visibility: visible; background: white; border: solid 2px; border-color: black;}
+
+	.black{ width: 200px; height: 200px; position: absolute; color: white; text-align: center; line-height: 200px; opacity: 1;backface-visibility:visible ; background: black; border: solid 2px; border-color: white; }
+
+	.ctop{transform: rotateX(90deg) translateZ(100px);}
+	.cbottom{transform: rotateX(-90deg) translateZ(100px);}
+	.cleft{transform: rotateY(90deg) translateZ(100px);}
+	.cright{transform: rotateY(-90deg) translateZ(100px);}
+	.cback{transform: rotateY(-180deg) translateZ(100px);}
+	.cfront{transform: translateZ(100px);}
+
+	.textContainer > div {width: 800px; height: 150px; text-align: center; font-size: 24px; line-height: 1.6; transform: translate(-50%,0%); left: 50%; position:absolute; top: 60vh;}
+
+	#text2, #text3 {display: none;}
+
+	button {width:60px; height: 40px; background: blue; position: absolute; left: 80%; top: 80vh; color: white; border-style: none; border-radius: 50%; display: none;}
+
+
+
+	@keyframes text1{
+		0%{opacity:0;}
+		80%{opacity:1;}
+	}
+	</style>
+</head>
+<body>
+	<section>
+		<div id="boxA">
+			<div id="cubeA" class="cube ani manwon5">
+				<div class="ctop white">top</div>
+				<div class="cbottom white">bottom</div>
+				<div class="cleft white">left</div>
+				<div class="cright white">right</div>
+				<div class="cback white">back</div>
+				<div class="cfront white">front</div>
+			</div>
+		</div>
+		<div id="boxB">
+			<div id="cubeB" class="cube ani">
+				<div class="ctop black">top</div>
+				<div class="cbottom black">bottom</div>
+				<div class="cleft black">left</div>
+				<div class="cright black">right</div>
+				<div class="cback black">back</div>
+				<div class="cfront black">front</div>
+			</div>
+		</div>
+		<div class="textContainer">
+			<div id="text1"></div>
+			<div id="text2"></div>
+			<div id="text3"></div>
+		</div>
+		
+		<button id="ok">완료</button>
+		<!-- <button id="next">다음</button>
+		<button id="next2">다음</button> -->
+	</section>
+	<script type="text/javascript">
+		// next2.onclick = function(){
+		// 	text1.style.display = "none";
+		// 	text2.style.display = "block";
+		// 	next2.style.display = "none";
+		// }
+		// next.onclick = function(){
+		// 	text2.style.display = "none";
+		// 	text3.style.display = "block";
+		// 	next.style.display = "none";
+		// }
+		
+
+		document.body.onload = function(){
+			text1.style.animation = "text1 5.5s forwards";
+			var contents = "여기 투명한 상자 a와 불투명한 상자 b가 있습니다. <br>우선 투명한 상자에 5만원을 넣겠습니다. <br>당신은 a와 b 둘 다 가져가거나 혹은 b만 가져갈 수 있습니다.";
+
+	var contentsArr = contents.split(" ");
+	var s = 0;
+	var contentsTimer = setInterval(print,180);
+
+			function print(){
+				var t = document.createElement("span");
+				t.innerHTML = contentsArr[s] + " ";
+				t.className = "word";
+				s++;
+				text1.appendChild(t);
+				if(s == contentsArr.length){
+					clearInterval(contentsTimer);
+				}
+			}
+		}
+
+		text1.onanimationend = function(){
+			text1.style.display = "none";
+			text2.style.display = "block";
+			text2.style.animation = "text1 6.5s forwards";
+			var contents = "그런데 저는 당신이 어떤 선택을 할 지 이미 알고 있습니다.<br>만약 a,b 두 상자를 모두 선택한다면, 저는 상자b를 비워놓을 것이고,<br>상자 b만 선택한다면 상자에 500만원을 넣어놓겠습니다.";
+					
+			var contentsArr = contents.split(" ");
+			var s = 0;
+			var contentsTimer = setInterval(print,180);
+
+			function print(){
+				var t = document.createElement("span");
+				t.innerHTML = contentsArr[s] + " ";
+				t.className = "word";
+				s++;
+				text2.appendChild(t);
+				if(s == contentsArr.length){
+					clearInterval(contentsTimer);
+				}
+			}
+		}
+
+		text2.onanimationend = function(){
+			text2.style.display = "none";
+			text3.style.display = "block";
+			text3.style.animation = "text1 3s forwards";
+			var contents = "점성술사가 상자를 채우고는 떠났다. .<br>이제 합리적으로 상자를 선택해보자.";
+					
+			var contentsArr = contents.split(" .");
+			var s = 0;
+			var contentsTimer = setInterval(print,800);
+
+			function print(){
+				var t = document.createElement("span");
+				t.innerHTML = contentsArr[s] + " ";
+				t.className = "word";
+				s++;
+				text3.appendChild(t);
+				if(s == contentsArr.length){
+					clearInterval(contentsTimer);
+				}
+			}
+		}
+
+		var moveA = false;
+		var moveB = false;
+
+
+		text3.onanimationend = function(){
+			// boxA.onmouseover = function(){
+			// 	cubeA.style.transitionDuration = "0.3";
+			// }
+			// boxA.onmouseout = function(){
+			// 	cubeA.style.animation = "rtcube 3s infinite linear";
+			// }
+
+			ok.style.display = "block";
+
+			boxA.onclick = function(){
+
+				if(!moveA){
+					cubeA.style.animationPlayState = "paused";
+					moveA = true;
+				}else{
+					cubeA.style.animationPlayState = "running";
+					moveA = false;
+				}
+				
+			} 
+			boxB.onclick = function(){
+				if(!moveB){
+					cubeB.style.animationPlayState = "paused";
+					moveB = true;
+				}else{
+					cubeB.style.animationPlayState = "running";
+					moveB = false;
+				}
+			} 
+		}
+
+		ok.onclick = function(){
+			if(moveA == true && moveB == true){
+				window.location.href ="newcombs3.html";
+			}
+			else if (moveA == false && moveB == true){
+				window.location.href ="newcombs4.html";
+			}
+			else{
+				alert("박스를 선택해주세요. (a와 b 혹은 b)");
+			}
+		}
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style type="text/css">
+		body {margin: 0;}
+		section {width: 100%; height: 100vh; background-image: url(paper.png); background-size: cover; text-align: left; overflow: hidden;}
+		.title {width: 70%; height: 20%; margin:0% 15%; display: flex;}
+		#question{width: 90%; align-items: flex-end; display: flex; font-size: 24px; line-height: 1.4; margin-bottom: 5px;} 
+		.buttonBox{width: 10%; text-align: right; align-items: flex-end; display:flex; position: relative; left: 5%}
+		#hint {width: 60px; height: 40px; border-radius: 50%; border: solid 2px red; background:none; margin: 130px 0% 0px 0%; font-size: 20px;align-items: flex-end;}
+		#hint:hover{background-color: red; color: white}
+		#hintBox {width: 350px; height: 100px; position: absolute; top: calc(20% + 50px); left: 84%; transform: translate(-100%,0%); background-color: white; z-index: 10; border-radius: 20px; text-align: left; padding-left: 20px; font-size: 20px; display: none;}
+		#hintBox:after {content:""; position: absolute; top: -30px; left: 370px; border-left: 30px solid transparent; border-right: 0px solid transparent; border-bottom: 45px solid white; transform: translate(-100%,0%); z-index: 9}
+		.blank {height: 30px; margin: 0; padding: 0; line-height: 30px; font-size: 24px; display: inline-block; width: 550px; margin-left: 15%; display: flex; align-items: flex-start;}
+		.a:hover{background-color: palegreen;}
+
+		.vertical{height:100vh; width:1px; border-width:0; color:#000; background-color: red; position: absolute; margin: 0; padding: 0; left: 13%}
+
+		#round{width: 80%; height: 80vh; fill:none; stroke:red;stroke-miterlimit:10; position: absolute; z-index: 100; stroke-dasharray: 3500; stroke-dashoffset: 0; stroke-linecap: round; animation: rot 1.8s ease-in forwards;}
+
+		@keyframes rot{
+			0%{stroke-dashoffset: 3500;}
+			60%{stroke-dashoffset: 0;}
+			80%{opacity: 1;}
+			100%{opacity: 0;}
+
+		}
+		#r{position: absolute; top: 55%; left: 15%; transform: translate(0%,-50%);  width: 800px; height: 800px; align-content: center; display: none;}
+
+		@keyframes text{
+			from{opacity: 0;}
+			to{opacity: 1;}
+		}
+		@keyframes disappear{
+			99%{opacity: 1;}
+			100%{opacity: 0;}
+		}
+		@keyframes rgba {
+			from{background-color: rgba(255, 132, 132, 0);}
+			to{background-color: rgba(255, 132, 132, 1);}
+		}
+
+		#comment {width: 60%; color: red; }
+
+	</style>
+</head>
+<body>
+	<section>
+		<!-- <div class="textContainer"> -->
+			<!-- <div class="vertical"></div> -->
+			<hr class="vertical" />
+			<div class="title">
+				<div id="question">다음 열 개의 문장 중 참인 것은 몇 개나 될까? 참이라고 생각하는 문장을 선택해보세요.</div>
+				<div class="buttonBox">
+					<button id="hint">힌트</button>
+				</div>
+			</div>
+			<div id="hintBox"> <br>두 개의 문장을 놓고 비교하여<br> 각 문장이 정답이 될 수 있는지 확인해보자.</div>
+			<hr />
+			<div class="blank"></div>
+			<hr />
+			<div class="blank a" id="a1">1. 이 문장들 중 하나만이 거짓이고 나머지는 참이다.</div>
+			<hr />
+			<div class="blank a" id="a2">2. 이 문장들 중 두 문장이 거짓이고 나머지는 참이다.</div>
+			<hr />
+			<div class="blank a" id="a3">3. 이 문장들 중 세 문장이 거짓이고 나머지는 참이다.</div>
+			<hr />
+			<div class="blank a" id="a4">4. 이 문장들 중 네 문장이 거짓이고 나머지는 참이다.</div>
+			<hr />
+			<div class="blank a" id="a5">5. 이 문장들 중 다섯 문장이 거짓이고 나머지는 참이다.</div>
+			<hr />
+			<div class="blank a" id="a6">6. 이 문장들 중 여섯 문장이 거짓이고 나머지는 참이다.</div>
+			<hr />
+			<div class="blank a" id="a7">7. 이 문장들 중 일곱 문장이 거짓이고 나머지는 참이다.</div>
+			<hr />
+			<div class="blank a" id="a8">8. 이 문장들 중 여덟 문장이 거짓이고 나머지는 참이다.</div>
+			<hr />
+			<div class="blank a" id="a9">9. 이 문장들 중 아홉 문장이 거짓이고 나머지는 참이다.</div>
+			<hr />
+			<div class="blank a" id="a10">10. 이 문장들 모두 거짓이다.</div>
+			<hr />
+			<div class="blank"></div>
+			<hr />
+			<div class="blank" id="comment"></div>
+			<hr />
+			<div class="blank"></div>
+			<hr />
+			<div class="blank"></div>
+			<hr />
+			<div class="blank"></div>
+			<?xml version="1.0" encoding="UTF-8"?><svg id="r" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" xml:space="preserve"><g id="round"><path class="round" id="round" d="m590.24,365.48c-37.77,33.55-214.38,175.82-433.91,116.54C49.51,453.18-17.48,346.33,4.76,237.95c62.78-305.94,577.62-326.02,572.24-3.1-1.91,114.51-39.88,207.07-56.55,242.34"/></g></svg>
+	
+	</section>
+
+	<script>
+		let wrongA = [a1,a2,a3,a4,a5,a6,a7,a8,a10];
+
+			for(var i=0; i<9; i++){
+				wrongA[i].onclick = function(){
+					if(wrongA[i]){
+						this.style.background = "#ff8484";
+						// this.style.animation = "rgba 5s linear reverse";
+						wrongA[i] = false;
+						// comment.style.animationPlayState = "running";
+						document.getElementById("comment").innerHTML = "이 문장과 다음 문장이 양립할 수 없다";
+					}
+					
+					else if(!wrongA[i]){
+						this.style.background = "none";
+						wrongA[i] = true;
+						document.getElementById("comment").innerHTML = " ";
+					}
+				}
+			}
+
+			a9.onclick = function(){
+				if(a9){
+					this.style.background = "palegreen";
+					a9 = false;
+					for(i=0; i<9; i++){
+							wrongA[i].style.background = "none";
+							document.getElementById("comment").innerHTML = "  ";
+					}
+					let r = document.getElementById("r");
+					r.style.display = "block";
+					let round = document.getElementById("round");
+					round.style.animationPlayState = "running";
+					round.onanimationend = function(){
+						r.style.display = "none";
+						document.getElementById("comment").innerHTML = "이 문장이 참인 경우 나머지 9개의 문장은 모두 거짓이 된다. 따라서 정답이 될 수 있다.";
+						comment.style.animation = "text 1s linear forwards";
+						for(i=0; i<9; i++){
+							// wrongA[i].style.background = "#ff8484";
+							wrongA[i].style.animation = "rgba 3s linear forwards";
+						};
+					}
+				}
+
+				else if(!a9){
+					this.style.background = "none";
+					a9 = true;
+				}	
+			}
+			hint.onmouseover = function(){
+				hintBox.style.display = "block";
+			}
+			hint.onmouseout = function(){
+				hintBox.style.display = "none";
+			}
+			
+
+	</script>
+</body>
+</html>

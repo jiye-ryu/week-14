@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>제논의 역설</title>
+	<style type="text/css">
+		@font-face {
+		    font-family: 'Pretendard-Regular';
+		    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+		    font-weight: 400;
+		    font-style: normal;
+}
+
+		body, div {margin: 0; padding: 0;}
+
+	
+
+		#sub{font-size: 36pt; font-weight: 700; margin-bottom: 50px;}
+
+		#second{position: absolute; z-index: 2; top: 50vh; left: 50vw; transform: translate(-50%,-50%); width: 1200px; height: 600px; display: flex; flex-wrap: wrap; font-family: 'Pretendard-Regular';}
+	
+
+
+		#race{width: 1200px; height: 400px; background-color: white; position: relative; top: 0px; display: flex; flex-wrap: wrap; overflow: hidden;}
+        #achilles, #turtle{width: 70px; height: 70px; border-radius: 50%;
+                                transform: translate(-50%, -50%);position: relative;
+                                top: 200px; left: 0px}
+        #achilles{background-image: url(man2.png); background-size: cover;}
+         #turtle{background-image: url(turtle2.png); background-size: cover;}
+         #distMonitor{height: 200px; width: 1000px; background-color: yellow;font-family: 'Pretendard-Regular'; font-size: 20px; color: blue;} 
+
+</style>
+</head>
+<body>
+		<div id="second">
+			<div id="sub">아킬레우스와 거북이</div>
+			<div id="distMonitor"></div>
+			<div id="race">
+		                <div id="turtle"></div>
+		                <div id="achilles"></div>
+	        	</div>
+	        	
+	        <div>
+
+		
+
+	<script type="text/javascript">
+	
+
+		//경주
+		let distance = 500;
+                let forward = 80;
+                let achillesRatio = 0.5;
+                let achillesRatio2 = 2;
+                let turtleDistance = distance;
+                let achillesDistance = 0;
+                let i = 0;
+                let achillesBack = [0, 290, 475, 607.5, 713.75, 806.875, 893.4375, 976.71875, 1058.359375, 1139.1796875, 1219.58984375]
+                  // let achillesBack = ["0","290","475","607.5","713.75","806.875","893.4375","976.71875","1058.359375","1139.1796875","1219.58984375"]
+                // let achillesBack = [];
+                
+                // let i = 0;
+                // let distNumber = [i];
+            
+                turtle.style.left = turtleDistance + "px";
+                window.onkeydown = function(e){
+                        if(e.keyCode == 39 && i < 10){
+	                        console.log("enter!!" + turtleDistance + "px " + achillesDistance + "px");
+
+	                         i++;
+
+	                        turtleDistance += forward; 
+	                        turtle.style.left = turtleDistance + "px";
+	                        turtle.style.transform = "rotateY(0deg)";
+	                        achillesDistance += (turtleDistance - achillesDistance) * achillesRatio;
+	                        achilles.style.left = achillesDistance + "px";
+	                        achilles.style.transform = "rotateY(0deg)";
+	                       
+	                        
+				
+	                        if (turtleDistance == 1300){
+	                        	alert("경주에서 졌습니다.");
+
+	                        }
+
+	                // for (i=0; i<10; i++)
+	                // 	{var a = turtleDistance;
+	        	// 	var b = achillesDistance;}
+
+			
+	                }
+	                 if(e.keyCode == 37 && i > 0){
+	                        console.log("back" + turtleDistance + "px " + achillesDistance + "px")
+	                        i--;
+	                        turtleDistance -= forward; 
+	                        turtle.style.left = turtleDistance + "px";
+	                        turtle.style.transform = "rotateY(180deg)";
+
+	                      
+	                        achillesDistance = achillesBack[i];
+	                        achilles.style.left = achillesDistance + "px";
+	                        achilles.style.transform = "rotateY(180deg)";
+
+	                        // if(i=!0){
+	                        // 	i=i-1;
+	                        // }
+	                        
+	                       
+	       
+	                }
+	               
+	                
+
+	                 if (i <= 0 || i >= 10){
+	                        turtleDistance = 500
+	                        turtle.style.left = turtleDistance + "px";
+	                      
+	                        achillesDistance = 0;
+	                        achilles.style.left = achillesDistance + "px";
+	                        	 i = 0;
+	                        }
+			 console.log(i);
+			distMonitor.innerHTML = "거북이:" + turtleDistance + "px " + "아킬레스: " + achillesDistance + "px 둘 사이의 거리 : " + (turtleDistance - achillesDistance) + "px" ; 
+
+	        }
+
+
+
+	
+	</script>
+
+</body>
+</html>
